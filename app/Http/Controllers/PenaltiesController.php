@@ -49,6 +49,7 @@ class PenaltiesController extends Controller
      */
     public function show(string $id)
     {
+        // $penalties = Penalties::with(['car'])->where('id', $id)->find($id);
         $penalties = Penalties::find($id);
 
         if (!$penalties) {
@@ -57,9 +58,8 @@ class PenaltiesController extends Controller
             ], 404);
         }
 
-        $data = Penalties::with(['car'])->where('id', $penalties->id)->get();
 
-        return response()->json($data);
+        return response()->json($penalties);
     }
 
     /**

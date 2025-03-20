@@ -92,7 +92,7 @@ class CarController extends Controller
             'type_car' => 'required',
             'year' => 'required',
             'seat' => 'required',
-            'image' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg',
             'total' => 'required',
             'price' => 'required',
             'status' => 'required'
@@ -101,6 +101,7 @@ class CarController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message'=> 'invalid field',
+                'error' => $validator->errors()
             ], 422);
         }
 

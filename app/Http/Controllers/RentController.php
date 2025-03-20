@@ -39,6 +39,7 @@ class RentController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message'=> 'invalid field',
+                'error' => $validator->errors()
             ], 422);
         }
 

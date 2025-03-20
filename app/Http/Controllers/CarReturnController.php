@@ -37,6 +37,7 @@ class CarReturnController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message'=> 'invalid field',
+                'error' => $validator->errors()
             ], 422);
         }
 
@@ -53,7 +54,7 @@ class CarReturnController extends Controller
      */
     public function show(string $id)
     {
-        $carReturn = CarReturn::find($id);
+        $carReturn = CarReturn::with(['register', 'car', 'penalties'])->where('id', $id)->find($id);
 
         if (!$carReturn) {
             return response()->json([
@@ -61,9 +62,9 @@ class CarReturnController extends Controller
             ], 404);
         }
 
-        $data = CarReturn::with(['register', 'car', 'penalties'])->where('id', $carReturn->id)->get();
+        // $data = CarReturn::with(['register', 'car', 'penalties'])->where('id', $carReturn->id)->get();
 
-        return response()->json($data);
+        return response()->json($carReturn);
     }
 
     /**
